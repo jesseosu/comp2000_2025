@@ -7,7 +7,6 @@ public class Cell {
   int x;
   int y;
   static int size = 35;
-  //test
 
   // constructors
   public Cell(int inX, int inY) {
