@@ -8,9 +8,10 @@ public class Cell extends Rectangle{
   //test
 
   // constructors
-  public Cell(int inX, int inY) {
+  public Cell(int inX, int inY, Point p) {
     x = inX;
     y = inY;
+    super.contains(p);
   }
 
   // methods
@@ -32,4 +33,4 @@ public class Cell extends Rectangle{
   //     return false;
   //   }
   }
-}
+
