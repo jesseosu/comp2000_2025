@@ -9,7 +9,7 @@ public class Grid {
   public Grid() {
     for(int i=0; i<cells.length; i++) {
       for(int j=0; j<cells[i].length; j++) {
-        cells[i][j] = new Cell(10+Cell.size*i, 10+Cell.size*j);
+        cells[i][j] = new Cell(10+Cell.size*i, 10+Cell.size*j, new Point(0,0));
       }
     }
   }
