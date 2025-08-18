@@ -1,11 +1,9 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Rectangle;
 
-public class Cell {
-  // fields
-  int x;
-  int y;
+public class Cell extends Rectangle{
   static int size = 35;
   //test
 
