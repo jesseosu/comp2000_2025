@@ -25,11 +25,11 @@ public class Cell extends Rectangle{
     g.drawRect(x, y, size, size);
   }
 
-  // public boolean contains(Point p) {
-  //   if(p != null) {
-  //     return x < p.x && x+size > p.x && y < p.y && y+size > p.y;
-  //   } else {
-  //     return false;
-  //   }
+  public boolean contains(Point p) {
+    if(p != null) {
+      return x < p.x && x+size > p.x && y < p.y && y+size > p.y;
+    } else {
+      return false;
+    }
   }
 }
