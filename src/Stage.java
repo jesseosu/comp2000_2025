@@ -17,8 +17,6 @@ public class Stage {
   public void paint(Graphics g, Point mouseLoc) {
 
     grid.paint(g, mouseLoc);
-
-
     for (Actor a : actors) {
       a.paint(g);
     }
