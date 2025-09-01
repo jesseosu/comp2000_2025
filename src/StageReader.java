@@ -7,26 +7,6 @@ import java.util.Optional;
 
 public class StageReader {
 
-  /**
-   * Reads a stage description from the given path and returns a populated Stage.
-   * 
-   * Format (one per line):
-   *   ColRow=Actor
-   * Examples:
-   *   J4=cat
-   *   S15=dog
-   *   A9=bird
-   *
-   * Rules/assumptions:
-   * - Col is a letter (A..Z or a..z) => 0-based column index.
-   * - Row is an integer (0..max grid rows), used as-is (0-based) to match your current code.
-   * - Actor is one of: cat, dog, bird (case-insensitive).
-   * - Lines may be blank or start with '#' (comments) — these are skipped.
-   *
-   * Error handling:
-   * - IO failures are handled here (Task 14): returns a default Stage() and logs an error.
-   * - Per-line format errors throw StageFormatException internally and are logged; the rest of the file still loads.
-   */
   public static Stage readStage(String path) {
     Path p = Path.of(path);
 
