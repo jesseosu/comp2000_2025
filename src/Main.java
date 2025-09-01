@@ -1,12 +1,12 @@
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.io.IOException;
+// import java.io.IOException;  // <- remove
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Main extends JFrame {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
       Main window = new Main();
       window.run();
     }
@@ -15,11 +15,8 @@ public class Main extends JFrame {
       Stage stage = new Stage();
       public Canvas() {
         setPreferredSize(new Dimension(1024, 720));
-        try {
-          stage = StageReader.readStage("data/stage1.rvb");
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
+        // StageReader now handles IO failures internally and returns a fallback Stage
+        stage = StageReader.readStage("data/stage1.rvb");
       }
 
       @Override
