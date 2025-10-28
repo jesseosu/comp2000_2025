@@ -3,9 +3,9 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class Stage {
+<<<<<<< Updated upstream
   Grid grid;
   List<Actor> listOfPlayers;
   List<Cell> cellOverlay;
@@ -96,3 +96,110 @@ public class Stage {
     currentState.mouseClick(x, y, this);
   }
 }
+=======
+    final Grid grid;
+    final List<Actor> actors = new ArrayList<>();
+    final List<IMovable> movableActors = new ArrayList<>();
+    private GameState gameState = GameState.PLAYING;
+    private int activeActorsCount;
+    
+    public Stage() {
+        this.grid = new Grid();
+        this.activeActorsCount = 5;
+
+        // Create and add unique characters with polygon shapes
+        Cat cat = new Cat(grid.getRandomCell());
+        Dog dog = new Dog(grid.getRandomCell());
+        Bird bird = new Bird(grid.getRandomCell());
+        Fox fox = new Fox(grid.getRandomCell());
+        Wolf wolf = new Wolf(grid.getRandomCell());
+        
+        actors.add(cat);
+        actors.add(dog);
+        actors.add(bird);
+        actors.add(fox);
+        actors.add(wolf);
+        
+        // Create movable actors
+        movableActors.add(new MovingCat(cat, grid, actors));
+        movableActors.add(new MovingDog(dog, grid, actors));
+        movableActors.add(new MovingBird(bird, grid, actors));
+        movableActors.add(new MovingFox(fox, grid, actors));
+        movableActors.add(new MovingWolf(wolf, grid, actors));
+        
+        preventInitialOverlap();
+    }
+    
+    private void preventInitialOverlap() {
+        for (int i = 0; i < actors.size(); i++) {
+            for (int j = i + 1; j < actors.size(); j++) {
+                Actor a1 = actors.get(i);
+                Actor a2 = actors.get(j);
+                if (a1.getCell().x == a2.getCell().x && a1.getCell().y == a2.getCell().y) {
+                    a2.setCell(grid.getRandomCell());
+                    j--; // Check this actor again
+                }
+            }
+        }
+    }
+    
+    public GameState getGameState() {
+        return gameState;
+    }
+    
+    public void handleClick(Point mousePos) {
+        if (gameState != GameState.PLAYING || mousePos == null) return;
+        
+        System.out.println("Click at: " + mousePos.x + ", " + mousePos.y); // Debug
+        
+        for (Actor actor : actors) {
+            boolean contains = actor.contains(mousePos);
+            System.out.println("Actor at " + actor.getCell().x + "," + actor.getCell().y + 
+                             " contains click: " + contains); // Debug
+                             
+            if (contains && actor.isActive()) {
+                actor.setActive(false);
+                activeActorsCount--;
+                System.out.println("Actor removed! Remaining: " + activeActorsCount); // Debug
+                
+                if (activeActorsCount == 0) {
+                    gameState = GameState.GAME_OVER_WIN;
+                }
+                break;
+            }
+        }
+    }
+    
+    public void update() {
+        if (gameState != GameState.PLAYING) return;
+        
+        for (IMovable movable : movableActors) {
+            movable.move();
+        }
+    }
+    
+    public void paint(Graphics g, Point mousePos) {
+        grid.paint(g, mousePos);
+        
+        for (Actor a : actors) {
+            a.paint(g);
+        }
+        
+        if (gameState == GameState.GAME_OVER_WIN) {
+            g.setColor(new Color(240, 240, 240, 200));
+            g.fillRect(250, 320, 220, 100);
+            g.setColor(Color.BLACK);
+            g.drawRect(250, 320, 220, 100);
+            g.drawString("GAME OVER - YOU WIN!", 270, 350);
+        }
+        
+        g.drawString("Active characters: " + activeActorsCount + "/5", 10, 20);
+        
+        // Debug: show mouse position
+        if (mousePos != null) {
+            g.setColor(Color.RED);
+            g.drawString("Mouse: " + mousePos.x + ", " + mousePos.y, 10, 40);
+        }
+    }
+}
+>>>>>>> Stashed changes

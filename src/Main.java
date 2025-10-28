@@ -1,8 +1,11 @@
 import java.awt.Dimension;
 import java.awt.Graphics;
-
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import java.awt.Color;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -12,11 +15,15 @@ import java.time.Instant;
 
 
 public class Main extends JFrame {
-    public static void main(String[] args) throws Exception {
-      Main window = new Main();
-      window.run();
+    private Stage stage;
+    private Canvas canvas;
+    
+    public static void main(String[] args) {
+        Main window = new Main();
+        window.run();
     }
 
+<<<<<<< Updated upstream
     class Canvas extends JPanel implements MouseListener {
       Stage stage;
       public Canvas() {
@@ -46,17 +53,60 @@ public class Main extends JFrame {
 
       @Override
       public void mouseExited(MouseEvent e) {}
+=======
+    class Canvas extends JPanel {
+        public Canvas() {
+            setPreferredSize(new Dimension(720, 720));
+            stage = new Stage();
+            
+            // Add mouse listener
+            addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (stage.getGameState() == GameState.GAME_OVER_WIN) {
+                        // Check if click is on restart button
+                        if (isPointInRestartButton(e.getPoint())) {
+                            stage = new Stage(); // Restart the game
+                        }
+                    } else {
+                        stage.handleClick(e.getPoint());
+                    }
+                }
+            });
+        }
+        
+        private boolean isPointInRestartButton(Point p) {
+            return p.x >= 300 && p.x <= 420 && p.y >= 400 && p.y <= 440;
+        }
+
+        @Override
+        public void paint(Graphics g) {
+            stage.update();
+            stage.paint(g, getMousePosition());
+            
+            // Draw restart button if game over
+            if (stage.getGameState() == GameState.GAME_OVER_WIN) {
+                g.setColor(Color.LIGHT_GRAY);
+                g.fillRect(300, 400, 120, 40);
+                g.setColor(Color.BLACK);
+                g.drawRect(300, 400, 120, 40);
+                g.drawString("RESTART", 325, 425);
+            }
+        }
+>>>>>>> Stashed changes
     }
 
     private Main() {
-      this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      Canvas canvas = new Canvas();
-      this.setContentPane(canvas);
-      this.pack();
-      this.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        canvas = new Canvas();
+        this.setContentPane(canvas);
+        this.pack();
+        this.setVisible(true);
+        this.setTitle("Click the Moving Characters!");
     }
 
     public void run() {
+<<<<<<< Updated upstream
       while(true) {
         // Re-draw the screen 50 times per second
         Instant startTime = Instant.now();
@@ -71,5 +121,11 @@ public class Main extends JFrame {
           System.out.println("application can't keep up with framerate");
         }
       }
+=======
+        while (true) {
+            repaint();
+            try { Thread.sleep(16); } catch (InterruptedException ignored) {}
+        }
+>>>>>>> Stashed changes
     }
 }

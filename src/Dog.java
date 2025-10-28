@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Polygon;
+<<<<<<< Updated upstream
 import java.util.ArrayList;
 
 public class Dog extends Actor {
@@ -29,3 +30,40 @@ public class Dog extends Actor {
     display.add(ear2);
   }
 }
+=======
+import java.awt.Color;
+
+public class Dog extends Actor {
+    public Dog(Cell inLoc) {
+        super(inLoc, Color.YELLOW);
+    }
+    
+    @Override
+    protected void createShapes() {
+        shapes.clear();
+        
+        int centerX = loc.x + Cell.size / 2;
+        int centerY = loc.y + Cell.size / 2;
+        
+        Polygon ear1 = new Polygon();
+        ear1.addPoint(centerX - 12, centerY - 12);
+        ear1.addPoint(centerX - 2, centerY - 12);
+        ear1.addPoint(centerX - 12, centerY - 2);
+
+        Polygon ear2 = new Polygon();
+        ear2.addPoint(centerX + 12, centerY - 12);
+        ear2.addPoint(centerX + 2, centerY - 12);
+        ear2.addPoint(centerX + 12, centerY - 2);
+
+        Polygon face = new Polygon();
+        face.addPoint(centerX - 7, centerY - 8);
+        face.addPoint(centerX + 7, centerY - 8);
+        face.addPoint(centerX + 7, centerY + 8);
+        face.addPoint(centerX - 7, centerY + 8);
+
+        shapes.add(ear1);
+        shapes.add(ear2);
+        shapes.add(face);
+    }
+}
+>>>>>>> Stashed changes
